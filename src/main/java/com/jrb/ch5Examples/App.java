@@ -5,8 +5,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class App {
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("test-jpa");
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		EntityTransaction transaction = entityManager.getTransaction();
@@ -21,9 +24,17 @@ public class App {
 		book2.setName("Book 2");
 		student.getBooks().add(book1);
 		student.getBooks().add(book2);
-		System.out.println(student.getBooks());
 		entityManager.persist(student);
 		transaction.commit();
+		
+		ObjectMapper om = new ObjectMapper();
+		try {
+			System.out.println(om.writeValueAsString(student));
+			
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 //		transaction.begin();
 //		Student student = entityManager.find(Student.class, 1L);
