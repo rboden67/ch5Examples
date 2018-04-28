@@ -21,6 +21,7 @@ public class App {
 		book2.setName("Book 2");
 		student.getBooks().add(book1);
 		student.getBooks().add(book2);
+		System.out.println(student.getBooks());
 		entityManager.persist(student);
 		transaction.commit();
 		
